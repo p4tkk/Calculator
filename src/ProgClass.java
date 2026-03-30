@@ -3,30 +3,43 @@ import java.util.Scanner;
 public class ProgClass {
     private final Scanner scanner = new Scanner(System.in);
     private final CalcEngine eng = new CalcEngine();
+    private final ModeManager mode = new ModeManager();
 
     public void start(){
         System.out.println("Калькулятор в режиме программиста");
-        System.out.println("Доступны: +, -, *, /, AND, OR, XOR, NOT, NAND, NOR");
-        System.out.println("Введите 'q' для выхода");
 
         while (true){
             try{
-                System.out.print("Введите первое число: ");
-                long n1 = Long.parseLong(scanner.next());
+                System.out.println("Режим: " + mode.getMode());
+                System.out.println("Введите первое число,");
+                System.out.println("команду для выбора сисетмы счисления (HEX, DEC, BIN, OCT)");
+                System.out.print("или 'q' для выхода: ");
+                String input = scanner.next();
 
-                System.out.print("Операция: ");
-                String opInput = scanner.next().toUpperCase();
-                if(opInput.equals("q")) break;
+                // проверка на выход из программы
+                if (input.equalsIgnoreCase("q")) break;
+
+                // проверка на изменение режима
+                if (isModeCommand(input)){
+                    mode.setMode(input);
+                    System.out.println("Система счисления изменена на " + mode.getMode());
+                    continue;
+                }
+
+                // парсим первое число
+                long n1 = mode.parse(input);
+
+                System.out.print("Операция (+, -, *, /, %, +/-): ");
+                String op = scanner.next();
 
                 long res;
-
-                if (opInput.equals("NOT")) {
-                    res = eng.calculateUnary(n1, opInput);
+                if (op.equals("+/-")) {
+                    res = eng.calculateUnary(n1, op);
                 } else {
-                    // Для всех остальных (бинарных) операций просим второе число
-                    System.out.print("Введите второе число: ");
-                    long n2 = Long.parseLong(scanner.next());
-                    res = eng.calculate(n1, n2, opInput);
+                    System.out.print("Введите второе число: (" + mode.getMode() + "): ");
+                    String input2 = scanner.next();
+                    long n2 = mode.parse(input2);
+                    res = eng.calculate(n1, n2, op);
                 }
 
                 System.out.println("Результат:");
@@ -38,5 +51,10 @@ public class ProgClass {
                 scanner.nextLine();
             }
         }
+    }
+
+    private boolean isModeCommand(String cmd) {
+        String c = cmd.toUpperCase();
+        return c.equals("HEX") || c.equals("DEC") || c.equals("BIN") || c.equals("OCT");
     }
 }

@@ -1,34 +1,38 @@
 public class CalcEngine {
 
-    public long calculate(long a, long b, String operator){
+    public long calculate(long a, long b, String operator) {
         long res = 0;
-        switch (operator.toUpperCase()){
+        switch (operator) {
             case "+": res = a + b; break;
             case "-": res = a - b; break;
             case "*": res = a * b; break;
             case "/":
                 if (b != 0) {
                     res = a / b;
-                }else{
-                    System.out.println("Ошибка!: деление на ноль недопустимо!");
+                } else {
+                    System.out.println("Ошибка: деление на ноль!");
                     res = 0;
-                } break;
-            case "AND": res = a & b; break;
-            case "OR":  res = a | b; break;
-            case "XOR": res = a ^ b; break;
-            case "NAND": res = ~(a & b); break;
-            case "NOR":  res = ~(a | b); break;
+                }
+                break;
+            case "%":
+                if (b != 0) {
+                    res = a % b;
+                } else {
+                    System.out.println("Ошибка: деление на ноль (остаток)!");
+                    res = 0;
+                }
+                break;
             default:
-                System.out.println("Ошибка: неизвестная бинарная операция.");
+                System.out.println("Ошибка: неизвестная операция.");
         }
         return res;
     }
 
-    public long calculateUnary(long a, String operator){
+    public long calculateUnary(long a, String operator) {
         long res = 0;
-        switch (operator){
-            case "NOT": // это побитовое отрицание (0 на 1, 1 на 0)
-                res = ~a;
+        switch (operator) {
+            case "+/-": // Смена знака числа
+                res = -a;
                 break;
             default:
                 System.out.println("Ошибка: неизвестная унарная операция.");

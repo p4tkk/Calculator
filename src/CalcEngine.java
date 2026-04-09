@@ -1,5 +1,6 @@
-public class CalcEngine {
+public class CalcEngine implements ICalculator{
 
+    @Override
     public long calculate(long a, long b, String operator) {
         long res = 0;
         switch (operator) {
@@ -27,7 +28,7 @@ public class CalcEngine {
         }
         return res;
     }
-
+    @Override
     public long calculateUnary(long a, String operator) {
         long res = 0;
         switch (operator) {

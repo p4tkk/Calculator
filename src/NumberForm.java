@@ -1,4 +1,6 @@
 public class NumberForm {
+
+    /** метод для вывода числа во всех системах счислени срузу */
     public static void printAllSystems(long value){
         System.out.println("HEX: " + Long.toHexString(value).toUpperCase());
         System.out.println("DEC: " + value);

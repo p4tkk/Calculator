@@ -1,5 +1,6 @@
 public class CalcEngine implements ICalculator{
 
+    /** выполнение обычной операции с двумя числами */
     @Override
     public long calculate(long a, long b, String operator) {
         long res = 0;
@@ -28,11 +29,13 @@ public class CalcEngine implements ICalculator{
         }
         return res;
     }
+
+    /** выполнение унарной операции, в моей программе это опреция смены знака "+/-" */
     @Override
     public long calculateUnary(long a, String operator) {
         long res = 0;
         switch (operator) {
-            case "+/-": // Смена знака числа
+            case "+/-": // смена знака числа
                 res = -a;
                 break;
             default:

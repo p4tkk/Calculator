@@ -1,6 +1,7 @@
 public class ModeManager {
     private int curMode = 10; // DEC
 
+    /** устанавливает систему счисления */
     public void setMode(String mode){
         switch (mode.toUpperCase()){
             case "BIN": curMode = 2; break;
@@ -12,6 +13,7 @@ public class ModeManager {
         }
     }
 
+    /** возвращает текстовое название текущего режима */
     public String getMode(){
         switch (curMode){
             case 2: return "BIN";
@@ -22,11 +24,19 @@ public class ModeManager {
         }
     }
 
+    /** преобразует введенную строку в число типа long, согласно текущему режиму */
     public long parse(String input){
         return Long.parseLong(input, curMode);
     }
 
-    public int getCurrentMode(){
-        return curMode;
+    /** возвращает строку-подсказку с допустимыми цифрами в текущей системе счисления */
+    public String getAvailableChars() {
+        switch (curMode) {
+            case 2:  return "0, 1";
+            case 8:  return "0 - 7";
+            case 10: return "0 - 9";
+            case 16: return "0 - 9, A - F";
+            default: return "Неизвестно";
+        }
     }
 }
